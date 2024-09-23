@@ -3,29 +3,15 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
-r_kernel = np.array([
-    [0, 0, 0],
-    [0, 0.3, 0],
-    [0, 0, 0]
-])
-g_kernel = np.array([
-    [0, 0, 0],
-    [0, 0.59, 0],
-    [0, 0, 0]
-])
-b_kernel = np.array([
-    [0, 0, 0],
-    [0, 0.11, 0],
-    [0, 0, 0]
+kernel = np.array([
+    [0.3, 0.59, 0.11],
+    [0.3, 0.59, 0.11],
+    [0.3, 0.59, 0.11]
 ])
 
 img = cv.imread(sys.argv[1])
 
-r_conv = cv.filter2D(img[:, :, 2], -1, r_kernel)
-g_conv = cv.filter2D(img[:, :, 1], -1, g_kernel)
-b_conv = cv.filter2D(img[:, :, 0], -1, b_kernel)
-
-res_conv = r_conv + g_conv + b_conv
+res_conv = cv.transform(img, kernel)
 
 cv.imwrite('gray.jpg', res_conv)
 
